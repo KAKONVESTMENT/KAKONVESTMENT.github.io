@@ -1,0 +1,5 @@
+# robots.txt for KAKO Investment
+User-agent: *
+Allow: /
+Sitemap: https://kakonvestment.github.io/sitemap.xml
+
