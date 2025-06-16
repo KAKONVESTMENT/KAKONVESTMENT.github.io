@@ -1,0 +1,99 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KAKO Loan Tracker (Protected)</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f4f7;
+      padding: 2rem;
+      display: none;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    th, td {
+      padding: 12px;
+      border: 1px solid #ddd;
+      text-align: center;
+    }
+    th {
+      background: #027333;
+      color: #fff;
+    }
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>KAKO Investment Auto Loan Tracker</h1>
+    <p>Agent: Amanya | Interest: 10% Monthly</p>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Client</th>
+        <th>Loan Amount (UGX)</th>
+        <th>Interest Rate</th>
+        <th>Loan Balance</th>
+        <th>Disbursed</th>
+        <th>Due Date</th>
+        <th>Status</th>
+        <th>Days to Due</th>
+      </tr>
+    </thead>
+    <tbody id="loanTable"></tbody>
+  </table>
+
+  <script>
+    const password = "Kako123@rudy";
+    const entered = prompt("Enter password to view this page:");
+    if (entered !== password) {
+      document.body.innerHTML = "<h2 style='color:red;text-align:center;'>Access Denied</h2>";
+    } else {
+      document.body.style.display = "block";
+
+      const loans = [
+        {client: "Reagan", amount: 2000000, rate: 0.10, disbursed: "2025-06-10", due: "2025-07-10"},
+        {client: "Mark", amount: 3000000, rate: 0.10, disbursed: "2025-06-10", due: "2025-07-10"},
+        {client: "Jalia-Reagan", amount: 1000000, rate: 0.10, disbursed: "2025-06-10", due: "2025-07-10"},
+        {client: "Bryan-Reagan", amount: 2500000, rate: 0.10, disbursed: "2025-06-10", due: "2025-07-10"},
+        {client: "Elly", amount: 600000, rate: 0.10, disbursed: "2025-06-10", due: "2025-07-10"}
+      ];
+
+      const table = document.getElementById("loanTable");
+      const today = new Date();
+
+      loans.forEach(loan => {
+        const dueDate = new Date(loan.due);
+        const daysToDue = Math.ceil((dueDate - today) / (1000 * 60 * 60 * 24));
+        const balance = loan.amount * (1 + loan.rate);
+        const row = `<tr>
+          <td>${loan.client}</td>
+          <td>${loan.amount.toLocaleString()}</td>
+          <td>${(loan.rate * 100).toFixed(0)}%</td>
+          <td>${balance.toLocaleString()}</td>
+          <td>${loan.disbursed}</td>
+          <td>${loan.due}</td>
+          <td>Out</td>
+          <td>${daysToDue} days</td>
+        </tr>`;
+        table.innerHTML += row;
+      });
+    }
+  </script>
+</body>
+</html>
